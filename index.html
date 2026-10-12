@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script type="module" src="main.js"></script>
+    <script type="module" defer src="index.js"></script>
 </head>
 <body>
     <div id="sidebar">
@@ -20,7 +21,10 @@
     </div>
 
     <div id="main">
-        
+        <div id="invites">
+            <button id="inviteButton">Invite a new user</button>
+            <p id="inviteJWT"></p>
+        </div>
     </div>
 </body>
 </html>
