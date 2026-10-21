@@ -89,7 +89,7 @@ input, label{
     animation-duration: 1s;
 }
 
-#loginContainer{
+#loginContainer, #signUpContainer{
     position: absolute;
     left: 50%;
     top: 50%;

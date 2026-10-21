@@ -1,11 +1,11 @@
-import {getCookie} from './cookies.js';
-import { decodeJWT } from './handleJWT.js';
+import { getCookie } from './modules/cookies.js';
+import { decodeJWT } from './modules/handleJWT.js';
+import { API_URL } from './modules/settings.js';
 
 const LOGIN_FORM = document.getElementById('loginForm'); 
 const LOGIN_BUTTON = document.getElementById('loginButton')
 const USERNAME_INPUT = document.getElementById('username');
 const PASSWORD_INPUT = document.getElementById('password');
-const API_URL = 'http://localhost:8000/apiV1';
 
 let authSuccess = false;
 
@@ -31,19 +31,20 @@ async function authenticate(username, password) {
 LOGIN_BUTTON.onclick = () => {
     authenticate(USERNAME_INPUT.value, PASSWORD_INPUT.value).then().then(data => {
         authSuccess = data['success'];
-        let access = decodeJWT(getCookie('access_tkn'));
-        let refresh = decodeJWT(getCookie('refresh_tkn'));
+        
+        if (authSuccess){
+            let access = data['data']['token_data']['access_tkn'];
+            let refresh = data['data']['token_data']['refresh_tkn'];
 
-        if (data['success']){
-            document.cookie = `access_tkn=${d['data']['access_tkn']};expires=${access['exp']}`;
-            document.cookie = `refresh_tkn=${d['data']['refresh_tkn']};expires=${refresh['exp']}`;
+            document.cookie = `access_tkn=${access};expires=${decodeJWT(access)['exp']}`;
+            document.cookie = `refresh_tkn=${refresh};expires=${decodeJWT(refresh)['exp']}`;
             LOGIN_FORM.submit();
             authSuccess = false; 
         }
         else{
-            alert('A felhasználónév és jelszó páros nem létezik!');
+            alert(data['msg']);
         }
-    }).catch();
+    }).catch(e => console.log(e));
 }
 
 LOGIN_FORM.addEventListener('submit', e => {
