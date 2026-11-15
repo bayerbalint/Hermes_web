@@ -1,36 +1,20 @@
-import { getCookie } from "./cookies.js";
-
-export async function getNewJWT(){
-    try{
-        const res = await fetch(`http://localhost:8000/apiV1/auth/refresh`, {
-            headers: new Headers({
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }),
-            method: "POST",
-            body: JSON.stringify({'refresh_tkn': getCookie('refresh_tkn')})
-        })
-
-        return res.json();
-    }
-    catch(err){
-        console.error(err);
-    }
-}
+import * as API from "./APICalls.js";
+import { getCookie, setCookie } from "./cookies.js";
 
 export function setJWTRefreshSchedule(){
-    let access = decodeJWT(getCookie('access_tkn'));
-    let refresh = decodeJWT(getCookie('refresh_tkn'));
     setTimeout(() => {
-        getNewJWT().then()
+        API.POSTRequest("/auth/refresh", {'refresh_tkn': getCookie('refresh_tkn')}).then()
         .then(d => {
-            document.cookie = `access_tkn=${d['data']['access_tkn']};expires=${access['exp']}`;
-            document.cookie = `refresh_tkn=${d['data']['refresh_tkn']};expires=${refresh['exp']}`;
+            let access = d['data']['access_tkn'];
+            let refresh = d['data']['refresh_tkn']
+
+            setCookie('access_tkn', access, decodeJWT(access)['exp']);
+            setCookie('refresh_tkn', refresh, decodeJWT(refresh)['exp']);
         })
         .catch(e => {
             console.error(e);
         });
-    }, access['exp'] * 1000 - Date.now());
+    }, decodeJWT(getCookie('access_tkn'))['exp'] * 1000 - Date.now());
 }
 
 export function decodeJWT(token){

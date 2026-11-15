@@ -15,5 +15,5 @@ export function getCookie(cname) {
 }
 
 export function setCookie(cname, value, expiration){
-    
+    document.cookie = `${cname}=${value};expires=${expiration}`;
 }

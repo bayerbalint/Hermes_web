@@ -1,9 +1,9 @@
 :root{
-    --PrimaryBackgroundColor: #292649;
-    --SecondaryBackgroundColor: #936ef7;
-    --TextColor: #cccad3;
+    --PrimaryBackgroundColor: #353535;
+    --SecondaryBackgroundColor: #f2edff;
+    --TextColor: #ffffff;
     --SurfaceColor: #151321; 
-    --NavigationTextColor: #F5C451;
+    --NavigationTextColor: #517df5;
 }
 
 @keyframes textSlideInAnimation{
@@ -100,52 +100,41 @@ input, label{
 
 #sidebar{
     position: absolute;
-    display: block;
-    box-sizing: border-box;
-    width: 10vmin;
-    height: 100%;
-    padding: 2vmin;
-    text-align: right;
-    background-color: rgba(0,0,0, 0.3);
-    transition: width 0.5s;
-    z-index: 2;
-}
-
-#openSidebarButton{
-    display: inline-block;
-    width: 6vmin;
-    height: 6vmin;
-    border: none;
-    padding: 0;
-    margin-bottom: 2vmin;
-    background-color: rgb(200, 200, 200);
-    background-image: url('./images/image.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-#optionsContainer{
-    display: flex;
-    align-items: end;
-    flex-flow: column;
-    text-align: center;
-    box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: calc(100% - 8vmin);
-    visibility: hidden;
+    width: 15vw;
+    height: 90vh;
+    left: 9.5vw;
+    top: 5vh;
+    transform: translateX(-50%);
 }
 
 #main{
     display: block;
     position: absolute;
-    left: 7.5vw;
-    top: 5vh;
-    width: 90vw;
+    width: 80vw;
     height: 90vh;
+    left: 99%;
+    top: 5vh;
+    transform: translateX(-100%);
+}
+
+#main, #sidebar{
     border: 2px solid black;
     border-radius: 20px;
     background-color: rgba(0,0,0,0.3);
-    transition: left 0.5s, width 0.5s;
-    z-index: 1;
+}
+
+#invites{
+    margin-left: auto;
+    width: 25%;
+    float: left;
+    box-sizing: border-box;
+    padding: 1.5vmin;
+}
+
+#invites input{
+    width: 80%;
+}
+
+#invites button{
+    width: fit-content;
 }
